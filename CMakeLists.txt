@@ -8,6 +8,10 @@ find_package(hpm-sdk REQUIRED HINTS $ENV{HPM_SDK_BASE})
 
 project(pcan_hpm5300)
 
+# PCAN-USB is a full-speed device; force the EHCI-device PFSC bit so the host
+# enumerates at 12 Mbps and the FS bulk maxpacket sizes (16/64) stay legal.
+sdk_compile_definitions(-DCONFIG_USB_DEVICE_FS=1)
+
 # make usb_config.h visible to the CherryUSB middleware compilation units
 sdk_inc(src)
 sdk_app_inc(src)
